@@ -77,18 +77,30 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "UX Prototype Studio creates interactive React JS UI prototypes from your design requirements." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "UX Prototype Studio creates interactive React JS UI prototypes from your design requirements." },
+      { title: "Philips Super Intelligence" },
+      {
+        name: "description",
+        content:
+          "AI-powered sales intelligence platform for account research, meetings and insights.",
+      },
+
+      { name: "author", content: "Philips" },
+
+      { property: "og:title", content: "Philips Super Intelligence" },
+      {
+        property: "og:description",
+        content:
+          "AI-powered sales intelligence platform for account research, meetings and insights.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "UX Prototype Studio creates interactive React JS UI prototypes from your design requirements." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fea5e9d6-e43f-44a5-ad12-76f23878a11a/id-preview-933d76cb--6c34ca2a-fc9c-4ebe-9e98-61a368a3d72e.lovable.app-1782200941918.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/fea5e9d6-e43f-44a5-ad12-76f23878a11a/id-preview-933d76cb--6c34ca2a-fc9c-4ebe-9e98-61a368a3d72e.lovable.app-1782200941918.png" },
+
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Philips Super Intelligence" },
+      {
+        name: "twitter:description",
+        content:
+          "AI-powered sales intelligence platform for account research, meetings and insights.",
+      },
     ],
     links: [
       {
