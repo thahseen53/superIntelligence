@@ -4,11 +4,10 @@ import {
   Building2,
   MessagesSquare,
   CalendarClock,
-  Bell,
-  Search,
   Settings,
   LogOut,
   FileText,
+  Swords,
 } from "lucide-react";
 import {
   Sidebar,
@@ -28,19 +27,14 @@ const primary = [
   { title: "Home", url: "/", icon: LayoutDashboard },
   { title: "Accounts", url: "/accounts", icon: Building2 },
   { title: "Meetings", url: "/meetings", icon: CalendarClock },
-  { title: "Documents", url: "/documents", icon: FileText },
+  // { title: "Documents", url: "/documents", icon: FileText },
+  { title: "Competitive Analysis", url: "/competitive", icon: Swords },
   { title: "Ask AI", url: "/ask", icon: MessagesSquare },
-] as const;
-
-const secondary = [
-  { title: "Alerts", url: "/", icon: Bell },
-  { title: "Search", url: "/", icon: Search },
 ] as const;
 
 export function AppSidebar() {
   const path = useRouterState({ select: (r) => r.location.pathname });
-  const isActive = (url: string) =>
-    url === "/" ? path === "/" : path.startsWith(url);
+  const isActive = (url: string) => (url === "/" ? path === "/" : path.startsWith(url));
 
   return (
     <Sidebar collapsible="icon">
@@ -68,24 +62,6 @@ export function AppSidebar() {
               {primary.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild isActive={isActive(item.url)}>
-                    <Link to={item.url}>
-                      <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Quick</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {secondary.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
                     <Link to={item.url}>
                       <item.icon className="h-4 w-4" />
                       <span>{item.title}</span>

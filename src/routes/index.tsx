@@ -184,9 +184,6 @@ function Home() {
                         <Button variant="ghost" size="sm" className="h-7 text-xs gap-1 text-primary">
                           View account <ArrowRight className="h-3 w-3" />
                         </Button>
-                        <Button variant="ghost" size="sm" className="h-7 text-xs">
-                          Draft outreach
-                        </Button>
                       </div>
                     </div>
                   </div>

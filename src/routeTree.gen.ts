@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as MeetingsRouteImport } from './routes/meetings'
 import { Route as DocumentsRouteImport } from './routes/documents'
+import { Route as CompetitiveRouteImport } from './routes/competitive'
 import { Route as AskRouteImport } from './routes/ask'
 import { Route as AccountsRouteImport } from './routes/accounts'
 import { Route as IndexRouteImport } from './routes/index'
@@ -33,6 +34,11 @@ const MeetingsRoute = MeetingsRouteImport.update({
 const DocumentsRoute = DocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompetitiveRoute = CompetitiveRouteImport.update({
+  id: '/competitive',
+  path: '/competitive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AskRoute = AskRouteImport.update({
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRouteWithChildren
   '/ask': typeof AskRoute
+  '/competitive': typeof CompetitiveRoute
   '/documents': typeof DocumentsRoute
   '/meetings': typeof MeetingsRouteWithChildren
   '/settings': typeof SettingsRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ask': typeof AskRoute
+  '/competitive': typeof CompetitiveRoute
   '/documents': typeof DocumentsRoute
   '/settings': typeof SettingsRoute
   '/accounts/$id': typeof AccountsIdRoute
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRouteWithChildren
   '/ask': typeof AskRoute
+  '/competitive': typeof CompetitiveRoute
   '/documents': typeof DocumentsRoute
   '/meetings': typeof MeetingsRouteWithChildren
   '/settings': typeof SettingsRoute
@@ -112,6 +121,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts'
     | '/ask'
+    | '/competitive'
     | '/documents'
     | '/meetings'
     | '/settings'
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/ask'
+    | '/competitive'
     | '/documents'
     | '/settings'
     | '/accounts/$id'
@@ -134,6 +145,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accounts'
     | '/ask'
+    | '/competitive'
     | '/documents'
     | '/meetings'
     | '/settings'
@@ -147,6 +159,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountsRoute: typeof AccountsRouteWithChildren
   AskRoute: typeof AskRoute
+  CompetitiveRoute: typeof CompetitiveRoute
   DocumentsRoute: typeof DocumentsRoute
   MeetingsRoute: typeof MeetingsRouteWithChildren
   SettingsRoute: typeof SettingsRoute
@@ -173,6 +186,13 @@ declare module '@tanstack/react-router' {
       path: '/documents'
       fullPath: '/documents'
       preLoaderRoute: typeof DocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/competitive': {
+      id: '/competitive'
+      path: '/competitive'
+      fullPath: '/competitive'
+      preLoaderRoute: typeof CompetitiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ask': {
@@ -259,6 +279,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountsRoute: AccountsRouteWithChildren,
   AskRoute: AskRoute,
+  CompetitiveRoute: CompetitiveRoute,
   DocumentsRoute: DocumentsRoute,
   MeetingsRoute: MeetingsRouteWithChildren,
   SettingsRoute: SettingsRoute,

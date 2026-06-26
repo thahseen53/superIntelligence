@@ -16,6 +16,7 @@ import {
   Globe,
   Database,
   ChevronRight,
+  FileText,
 } from "lucide-react";
 
 export const Route = createFileRoute("/accounts/$id")({
@@ -93,6 +94,7 @@ function AccountDetail() {
           <TabsTrigger value="opportunities">Opportunities</TabsTrigger>
           <TabsTrigger value="installbase">Install base</TabsTrigger>
           <TabsTrigger value="competitive">Competitive</TabsTrigger>
+          <TabsTrigger value="documents">Documents</TabsTrigger>
         </TabsList>
 
         <TabsContent value="intelligence" className="mt-6">
@@ -343,27 +345,57 @@ function AccountDetail() {
           </Card>
         </TabsContent>
 
-        <TabsContent value="installbase" className="mt-6">
+        <TabsContent value="installbase" className="mt-6 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <Card className="border-border/60 shadow-[var(--shadow-card)]">
+              <CardContent className="p-4">
+                <div className="text-xs uppercase tracking-wide text-muted-foreground">Total units</div>
+                <div className="text-2xl font-semibold text-foreground">100</div>
+              </CardContent>
+            </Card>
+            <Card className="border-destructive/30 bg-destructive/5 shadow-[var(--shadow-card)]">
+              <CardContent className="p-4 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-md bg-destructive/10 text-destructive flex items-center justify-center">
+                  <AlertTriangle className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-xs uppercase tracking-wide text-muted-foreground">Active tickets</div>
+                  <div className="text-2xl font-semibold text-destructive">20</div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card className="border-border/60 shadow-[var(--shadow-card)]">
+              <CardContent className="p-4">
+                <div className="text-xs uppercase tracking-wide text-muted-foreground">Reaching EOL ≤ 12mo</div>
+                <div className="text-2xl font-semibold text-warning-foreground">17</div>
+              </CardContent>
+            </Card>
+          </div>
           <Card className="border-border/60 shadow-[var(--shadow-card)]">
             <CardContent className="p-6 text-sm space-y-4">
               {[
-                { p: "IntelliVue Patient Monitors", q: 64, eol: 12 },
-                { p: "Azurion Image-Guided Therapy", q: 8, eol: 1 },
-                { p: "EPIQ Ultrasound Systems", q: 22, eol: 4 },
-                { p: "Ingenia MRI", q: 6, eol: 0 },
+                { p: "IntelliVue Patient Monitors", q: 64, eol: 12, tickets: 11 },
+                { p: "Azurion Image-Guided Therapy", q: 8, eol: 1, tickets: 2 },
+                { p: "EPIQ Ultrasound Systems", q: 22, eol: 4, tickets: 5 },
+                { p: "Ingenia MRI", q: 6, eol: 0, tickets: 2 },
               ].map((p) => (
-                <div key={p.p} className="flex items-center justify-between p-4 rounded-lg border">
+                <div key={p.p} className="flex items-center justify-between gap-4 p-4 rounded-lg border">
                   <div>
                     <div className="font-medium text-foreground">{p.p}</div>
                     <div className="text-xs text-muted-foreground">{p.q} units installed</div>
                   </div>
-                  {p.eol > 0 ? (
-                    <Badge variant="outline" className="text-warning border-warning/30 bg-warning/10">
-                      {p.eol} reach EOL ≤ 12mo
+                  <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="text-destructive border-destructive/30 bg-destructive/10 gap-1">
+                      <AlertTriangle className="h-3 w-3" /> {p.tickets} active tickets
                     </Badge>
-                  ) : (
-                    <Badge variant="secondary">Healthy</Badge>
-                  )}
+                    {p.eol > 0 ? (
+                      <Badge variant="outline" className="text-warning border-warning/30 bg-warning/10">
+                        {p.eol} reach EOL ≤ 12mo
+                      </Badge>
+                    ) : (
+                      <Badge variant="secondary">Healthy</Badge>
+                    )}
+                  </div>
                 </div>
               ))}
             </CardContent>
@@ -371,19 +403,81 @@ function AccountDetail() {
         </TabsContent>
 
         <TabsContent value="competitive" className="mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                title: "My Competitors",
+                items: [
+                  { v: "GE Healthcare", note: "20 new hospitals in the Bay Area", area: "Imaging", time: "1 week ago" },
+                  { v: "Siemens Healthineers", note: "Planning a research centre at their headquarters, New York", area: "Human Monitoring System", time: "1 month ago" },
+                  { v: "Masimo", note: "Active monitoring pilot in 2 Mercy facilities", area: "Patient Monitoring", time: "3 weeks ago" },
+                ],
+              },
+              {
+                title: "Similar Business",
+                items: [
+                  { v: "Canon Medical", note: "Announced new cath lab partnership with Trinity Health", area: "IGT", time: "2 weeks ago" },
+                  { v: "Hillrom (Baxter)", note: "Released next-gen vital signs monitor for IDN segment", area: "Patient Monitoring", time: "1 month ago" },
+                  { v: "Mindray", note: "Expanded North American distribution network", area: "Ultrasound", time: "6 weeks ago" },
+                ],
+              },
+            ].map((col) => (
+              <Card key={col.title} className="border-border/60 shadow-[var(--shadow-card)]">
+                <CardHeader>
+                  <CardTitle className="text-base">{col.title}</CardTitle>
+                  <CardDescription>Recent updates</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {col.items.map((c) => (
+                    <div key={c.v} className="p-4 rounded-lg border bg-card">
+                      <div className="flex items-center justify-between gap-2 mb-1">
+                        <div className="font-semibold text-foreground text-sm">{c.v}</div>
+                        <span className="text-xs text-muted-foreground">{c.time}</span>
+                      </div>
+                      <div className="text-sm text-foreground">{c.note}</div>
+                      <Badge variant="secondary" className="mt-2 text-[10px]">{c.area}</Badge>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="documents" className="mt-6">
           <Card className="border-border/60 shadow-[var(--shadow-card)]">
-            <CardContent className="p-6 space-y-3 text-sm">
+            <CardHeader>
+              <CardTitle className="text-base">Documents</CardTitle>
+              <CardDescription>Auto-saved from briefs, decks, proposals, and synced sources</CardDescription>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="grid grid-cols-12 px-5 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wide bg-secondary border-b">
+                <div className="col-span-5">Name</div>
+                <div className="col-span-3">Source</div>
+                <div className="col-span-2">Size</div>
+                <div className="col-span-2 text-right">Updated</div>
+              </div>
               {[
-                { v: "GE Healthcare", area: "Imaging", note: "Recent MRI win at Anderson site" },
-                { v: "Siemens Healthineers", area: "IGT", note: "Pilot ended Q1 — no renewal" },
-                { v: "Masimo", area: "Monitoring", note: "Active in 2 facilities" },
-              ].map((c) => (
-                <div key={c.v} className="flex items-start justify-between gap-4 p-4 rounded-lg border">
-                  <div>
-                    <div className="font-semibold text-foreground">{c.v}</div>
-                    <div className="text-xs text-muted-foreground">{c.area}</div>
+                { n: "Mercy Health — QBR Executive Brief.pdf", src: "Outlook", size: "1.4 MB", upd: "12 min ago", color: "bg-primary/10 text-primary" },
+                { n: "Azurion Cath Lab — Pitch Deck.pptx", src: "Salesforce", size: "8.2 MB", upd: "1h ago", color: "bg-success/10 text-success" },
+                { n: "Dr. Park — Intro thread.eml", src: "Outlook", size: "48 KB", upd: "3h ago", color: "bg-primary/10 text-primary" },
+                { n: "Mercy IGT-2026 Opportunity Notes.docx", src: "Salesforce", size: "212 KB", upd: "Yesterday", color: "bg-primary/10 text-primary" },
+                { n: "HPM Bundle Proposal v2.docx", src: "Outlook", size: "640 KB", upd: "2d ago", color: "bg-primary/10 text-primary" },
+                { n: "Mercy Competitive Battle Card.pdf", src: "Salesforce", size: "980 KB", upd: "3d ago", color: "bg-destructive/10 text-destructive" },
+                { n: "Service contract renewal — IntelliVue.pdf", src: "Salesforce", size: "1.1 MB", upd: "5d ago", color: "bg-destructive/10 text-destructive" },
+              ].map((d) => (
+                <div key={d.n} className="grid grid-cols-12 items-center px-5 py-3 border-b last:border-0 text-sm hover:bg-secondary/50">
+                  <div className="col-span-5 flex items-center gap-3">
+                    <div className={`h-8 w-8 rounded-md flex items-center justify-center ${d.color}`}>
+                      <FileText className="h-4 w-4" />
+                    </div>
+                    <span className="font-medium text-foreground">{d.n}</span>
                   </div>
-                  <div className="text-sm text-muted-foreground max-w-md text-right">{c.note}</div>
+                  <div className="col-span-3">
+                    <Badge variant="secondary" className="text-[10px]">{d.src}</Badge>
+                  </div>
+                  <div className="col-span-2 text-muted-foreground">{d.size}</div>
+                  <div className="col-span-2 text-right text-muted-foreground">{d.upd}</div>
                 </div>
               ))}
             </CardContent>

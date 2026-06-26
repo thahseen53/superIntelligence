@@ -11,7 +11,6 @@ import {
   CheckCircle2,
   Sparkles,
   ArrowRight,
-  Plus,
 } from "lucide-react";
 
 export const Route = createFileRoute("/meetings/")({
@@ -54,11 +53,6 @@ function Meetings() {
     <AppShell
       title="Meetings"
       subtitle="Schedule, prep notes, and post-meeting summaries"
-      actions={
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" /> New meeting
-        </Button>
-      }
     >
       <div className="space-y-8">
         <section>
